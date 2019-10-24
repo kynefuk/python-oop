@@ -1,7 +1,7 @@
 import os
 import sys
 
-from notebook import Manager
+from todo import Manager
 
 
 class Menu(object):
