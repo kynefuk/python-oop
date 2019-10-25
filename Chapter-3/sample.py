@@ -123,10 +123,10 @@ class MediaLoader(metaclass=abc.ABCMeta):
     def __subclasshook__(cls, C):
         # classBのclsがMediaLoaderであること
         if cls is MediaLoader:
-            # classAのattributeを取得
+            # classAの全要素(メソッド・プロパティ)を取得
             attrs = set(dir(C))
 
-            # classBの抽象メソッド・プロパティがclassAのattributeに含まれる場合
+            # classBの抽象メソッド・プロパティがclassAの要素に含まれる場合はサブクラスと判定する
             if set(cls.__abstractmethods__) <= attrs:
                 return True
         return NotImplemented
