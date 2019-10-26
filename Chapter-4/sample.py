@@ -18,6 +18,7 @@ def call_exceptor():
     print('call no_return() now')
     try:
         no_return()
+
         # 以下は実行されない
         print('an Exception was raised...')
     except Exception:
