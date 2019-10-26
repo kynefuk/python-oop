@@ -124,6 +124,7 @@ class MediaLoader(metaclass=abc.ABCMeta):
         # classBのclsがMediaLoaderであること
         if cls is MediaLoader:
             # classAの全要素(メソッド・プロパティ)を取得
+            # dir()で引数のオブジェクトの有効な属性のリストを取得する
             attrs = set(dir(C))
 
             # classBの抽象メソッド・プロパティがclassAの要素に含まれる場合はサブクラスと判定する
