@@ -36,6 +36,18 @@ class SubClass(LeftSubClass, RightSubClass):
         self.num_sub_calls += 1
 
 
+"""
+SubClassのcall_me()を実行すると以下の処理が行われる
+1. LeftSubClassのcall_me()のsuper().call_me()でRightSubClassのcall_me()が実行
+2. RightSubClassのcall_me()のsuper().call_me()でBaseClassのcall_me()が実行
+3. RightSubClassのcall_me()の後続処理
+4. LeftSubClassのcall_me()の後続処理
+5. SubClassのcall_me()の後続処理
+"""
+
+#########################
+
+
 class Contact:
     all_contacts = []
 
@@ -69,6 +81,7 @@ class Friend(Contact, AddressHolder):
     Friendをインスタンス化すると、
     Friendのinitのsuper().initでContactのinitが呼び出され
     Contactのinitのsuper().initでAddressHolderのinitが呼び出される。
+    **kwargsで展開して親クラスのinitに渡してあげている
     """
 
     def __init__(self, phone="", **kwargs):
@@ -80,28 +93,13 @@ class Friend(Contact, AddressHolder):
         print("Friend's __init__ finished")
 
 
-class AudioFile:
+"""
+多重継承する際にパラメータが異なる親クラスのinitを実行できるように
+各クラスのinitのパラメータはキーワード引数とし、**argsを展開して
+渡すことで引数をうまく処理できるようにする
+"""
 
-    def __init__(self, filename):
-        if not filename.endswith(self.ext):
-            raise Exception('Invalid file format')
-        self.filename = filename
-
-
-class MP3File(AudioFile):
-
-    ext = 'mp3'
-
-    def play(self):
-        print(f'{self.ext} is playing')
-
-
-class WavFile(AudioFile):
-
-    ext = 'wav'
-
-    def play(self):
-        print(f'{self.ext} is plyaing')
+#####################################
 
 
 class MediaLoader(metaclass=abc.ABCMeta):
@@ -133,18 +131,18 @@ class MediaLoader(metaclass=abc.ABCMeta):
         return NotImplemented
 
 
-class Wav(MediaLoader):
-    # このクラスは抽象メソッド・プロパティを実装していないため
-    # オブジェクトを生成できない
-    pass
-
-
-class Ogg(MediaLoader):
+class MP3(MediaLoader):
     # 抽象メソッド・プロパティを実装しているのでオブジェクトを生成できる
     ext = 'ext'
 
     def play(self):
         pass
+
+
+class Wav(MediaLoader):
+    # このクラスは抽象メソッド・プロパティを実装していないため
+    # オブジェクトを生成できない
+    pass
 
 
 class Hoge():

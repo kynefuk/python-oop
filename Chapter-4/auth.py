@@ -44,12 +44,20 @@ class User(object):
         self.is_logged_in = False
 
     def _encrypt_pw(self, password):
+        """
+        パスワードのハッシュを行う
+        """
+
         hash_string = self.username + password
         hash_string = hash_string.encode('utf8')
 
         return hashlib.sha256(hash_string).hexdigest()
 
     def check_password(self, password):
+        """
+        入力されたパスワードが正しいかチェックする
+        """
+
         encrypted = self._encrypt_pw(password)
 
         return encrypted == self.password
@@ -63,6 +71,10 @@ class Authenticator(object):
         self.users = {}
 
     def add_user(self, username, password):
+        """
+        ユーザの追加を行う
+        """
+
         if username in self.users:
             raise UsernameAlreadyExists(username)
         if len(password) < 6:
@@ -71,6 +83,10 @@ class Authenticator(object):
         self.users[username] = User(username, password)
 
     def login(self, username, password):
+        """
+        ユーザのログインを実行する
+        """
+
         try:
             user = self.users[username]
         except KeyError:
@@ -97,14 +113,24 @@ class Authorizor(object):
         self.permissions = {}
 
     def add_permission(self, perm_name):
+        """
+        権限の種類を追加する
+        """
+
         try:
+            # perm_nameが既に存在するかチェック
             self.permissions[perm_name]
         except KeyError:
+            # perm_nameが無ければ作成する
             self.permissions[perm_name] = set()
         else:
             raise PermissionError('Permission exists')
 
     def permit_user(self, perm_name, username):
+        """
+        ユーザに権限を追加する
+        """
+
         try:
             perm_set = self.permissions[perm_name]
         except KeyError:
@@ -115,6 +141,10 @@ class Authorizor(object):
             perm_set.add(username)
 
     def check_permission(self, perm_name, username):
+        """
+        ユーザが権限を持っているかチェックする
+        """
+
         if not self.authenticator.is_logged_in(username):
             raise NotLoggedInError(username)
 

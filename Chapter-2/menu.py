@@ -5,6 +5,10 @@ from todo import Manager
 
 
 class Menu(object):
+    """
+    ターミナル上でメニューオプションおよびオプションの実行結果を表示するクラス
+    """
+
     linesep = os.linesep
 
     def __init__(self, *args, **kwargs):
@@ -29,10 +33,15 @@ class Menu(object):
         5. Modify Todo's tags
         6. Delete Todo
         7. Quit
-        """
+            """
         )
 
     def run(self):
+        """
+        メイン関数。
+        オプション選択肢の表示と入力値に基づきオプションを実行する
+        """
+
         while True:
             self.display()
             choice = input("Enter option:")
@@ -49,6 +58,9 @@ class Menu(object):
                 print("your option {choice} is not valid")
 
     def show_todos(self, manager=None):
+        """
+        Todoを一覧表示する
+        """
 
         if not manager:
             manager = Manager()
@@ -64,6 +76,10 @@ class Menu(object):
             )
 
     def add_todo(self):
+        """
+        Todoの追加を行う
+        """
+
         title = input("Enter Todo's title:")
         due_time = input("Enter Todo's due_time:")
         tags = input("Enter Todo's tags:")
@@ -72,6 +88,10 @@ class Menu(object):
         print("New Todo has been created")
 
     def modify_todo_title(self):
+        """
+        Todoのタイトルの編集を行う
+        """
+
         todo_id = input("Enter Todo's id:")
         title = input("Enter new Todo's title:")
         self.manager.modify_title(todo_id, title)
@@ -79,6 +99,10 @@ class Menu(object):
         print("Todo has been updated!")
 
     def modify_todo_due_time(self):
+        """
+        Todoの期限日の編集を行う
+        """
+
         todo_id = input("Enter Todo's id:")
         due_time = input("Enter new Todo's due_time:")
         self.manager.modify_due_time(todo_id, due_time)
@@ -86,6 +110,10 @@ class Menu(object):
         print("Todo has been updated!")
 
     def modify_todo_tags(self):
+        """
+        Todoの期限日の編集を行う
+        """
+
         todo_id = input("Enter Todo's id:")
         tags = input("Enter new Todo's tags:")
         self.manager.modify_tags(todo_id, tags)
@@ -93,12 +121,20 @@ class Menu(object):
         print("Todo has been updated!")
 
     def delete_todo(self):
+        """
+        Todoの削除を行う
+        """
+
         todo_id = input("Enter Todo's id:")
         self.manager.delete_todo(todo_id)
 
         print("Todo has been deleted!")
 
     def quit(self):
+        """
+        システムを終了する
+        """
+
         print("Thank you!")
         sys.exit(0)
 

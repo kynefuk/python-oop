@@ -1,0 +1,5 @@
+* else句はtry句で例外が発生しなかった場合に実行される
+* ただしtry句でreturn文が実行された場合はelse句は実行されない(finally句は実行される)
+* finally句はtry句except句のreturn文より先に実行される（finally句→return文
+ の順で実行される）
+* exceptされなかった例外は、例外発生元の呼び出し元に伝搬される

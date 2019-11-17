@@ -18,13 +18,15 @@ def call_exceptor():
     print('call no_return() now')
     try:
         no_return()
-
-        # 以下は実行されない
+        # Exceptionが発生するとexceptブロックに処理が移るので以下は実行されない
         print('an Exception was raised...')
-    except Exception:
+    except Exception as e:
         print('I caught an Exception')
+        print(e)
     else:
+        # try句で例外が発生しない場合のみelse句が実行される
         print('No Exception raised')
+
     print('executed after caught an Exception')
 
 
@@ -33,7 +35,7 @@ def funny_division3(divider):
     try:
         if divider == 13:
             raise ValueError('13 is an unlucky number')
-        return 100 / divider
+        # return 100 / divider
     except ZeroDivisionError:
         return 'Enter a number other than zero'
     except TypeError:
@@ -41,7 +43,11 @@ def funny_division3(divider):
     except ValueError:
         print('Please dont enter 13!')
         raise
-    finally:  # except句のreturnより前に実行される
+    else:
+        # try句で例外が発生しないかつtry句の処理がreturnで終了していない場合に実行される
+        print('No Exception was caught')
+    finally:
+        # except句のreturnやraiseより前に実行される
         print('always executed in the last')
 
 
