@@ -163,3 +163,44 @@ class Hage():
 class Fuga():
     # play()を持っていないためMediaLoaderのサブクラスと認識されない
     ext = 'fuga'
+
+
+class MyBaseClass:
+    def __init__(self, value):
+        self.value = value
+
+
+class TimesFive(MyBaseClass):
+    def __init__(self, value):
+        MyBaseClass.__init__(self, value)
+        self.value *= 5
+
+
+class PlusTwo(MyBaseClass):
+    def __init__(self, value):
+        MyBaseClass.__init__(self, value)
+        self.value += 2
+
+
+class ThisWay(TimesFive, PlusTwo):
+    def __init__(self, value):
+        # この書き方だと、PlusTwo.__init__でBaseClassのvalueがリセットされる
+        TimesFive.__init__(self, value)
+        PlusTwo.__init__(self, value)
+
+
+class TimesFiveCorrect(MyBaseClass):
+    def __init__(self, value):
+        super().__init__(value)
+        self.value *= 5
+
+
+class PlusTwoCorrect(MyBaseClass):
+    def __init__(self, value):
+        super().__init__(value)
+        self.value += 2
+
+
+class GoodWay(TimesFiveCorrect, PlusTwoCorrect):
+    def __init__(self, value):
+        super().__init__(value)
